@@ -209,10 +209,10 @@ sub irc_any_message {
 		$irc->yield(unregister => 'all'); 
 		exit 0;
 		}
-		else { $irc->yield('privmsg' => $rspto=> "$sndsimple: no, u");
+		else { 
+			$irc->yield('privmsg' => $rspto=> "$sndsimple: no, u");
 			$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
-		
-		};
+		}
 	}
 	elsif($message =~ /^\!cough/){
     	$irc->yield('privmsg' => $rspto => "*grabs cough's sac.*");

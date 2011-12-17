@@ -218,16 +218,16 @@ sub irc_any_message {
     	$irc->yield('privmsg' => $rspto => "*grabs cough's sac.*");
     	$irc->yield('privmsg' => $rspto => "cough for me boy. >:C");
 	}
-    elsif($message =~ /^\!chillout/){
+    	elsif($message =~ /^\!chillout/){
     	my $recv = (split(' ', $message))[1];
-    	if(defined $recv){
-    	$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a car crash :P");
+    		if(defined $recv){
+    		$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a car crash :P");
+    		}
+    		else {
+    		$irc->yield('privmsg' => $rspto => "$sndsimple: chillout dawg, think about CPUkiller in a car crash :P");
+    	 	}
     	}
-    	else {
-    	$irc->yield('privmsg' => $rspto => "$sndsimple: chillout dawg, think about CPUkiller in a car crash :P");
-    	}
-    }
-    elsif($message =~ /^\!heyya/){
+   	elsif($message =~ /^\!heyya/){
 		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
 		
 	}
@@ -262,7 +262,7 @@ sub irc_any_message {
         	$irc->yield(unregister => 'all'); #Unregister all events.
       		&_start; #Reconnect by rerunning &_start.
     	}
-    elsif($message =~ /^\!molest/){
+    	elsif($message =~ /^\!molest/){
 		@lol = split(' ', $message);
 		@speaker = split('!', $speaker);
 		$speaker = $speaker[0];
@@ -286,7 +286,7 @@ sub irc_any_message {
 		$irc->yield('privmsg' => $rspto => "Hello, $sndsimple :)");
 	}
     	
-    ####RSS FEEDS####
+    	####RSS FEEDS####
     
 	elsif($message =~ /^\!bbc/){
 		my $xml = oystercommands->bbc();
@@ -346,20 +346,18 @@ sub irc_any_message {
 	elsif($message =~ /^\!add_feed/){
 		my $url = (split(' ', $message))[1];
 		my $rss = get('$url');
-		if(defined $rss){
+		if(defined $rss);
 		my $xml = XMLin($rss);
 		my $spl = scalar(@{$xml->{channel}->{item}});
 		
 		for(my $i=0; $i<3; $i++){
-        $irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
-        }
-	}	
-	else{
+        		$irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
+        	}
+		}	
+		else{
 		$irc->yield('privmsg' => $rspto => "$sndsimple: Bitches ain't shit but hoes 'n' tricks ");
+		}
 	}
-	}
-	
-	
 }
 
 sub irc_340 {

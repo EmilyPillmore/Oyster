@@ -349,6 +349,23 @@ sub irc_any_message {
 		$irc->yield('privmsg' => $rspto => "$sndsimple: Bitches ain't shit but hoes 'n' tricks ");
 		}
 	}
+	# User Feed Commands
+	
+	elsif($message =~ /^\!register/){
+		my @args = split(' ', $message);
+		oysterfeeds->register($args[1], $args[2]);
+		$irc->yield('privmsg' => $rspto => "$sndsimple: Registration successful, $sndsimple!");
+	}
+	elsif($message =~ /^\!get/){
+		my @args = split(' ', $message);
+		my $xml = oysterfeeds->get($args[1], $args[2]);
+		$irc->yield('privmsg' => $sndsimple => "$sndsimple: [Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
+    	}
+	elsif($message =~ /^\!new_feed/){
+		my @args = split(' ', $message);
+		oysterfeeds->new_feed($args[1], $args[2], $args[3]);
+		$irc->yield('privmsg' => $rspto => "$sndsimple: new feed successfully added!");
+	}
 }
 
 sub irc_340 {

@@ -15,9 +15,13 @@ sub tolog {
 
 sub register {
 	
-	return 0;
-	
-	
+	sub register {
+	my $user = Digest::MD5::md5_hex($_[0]);
+	my $pass = Digest::MD5::md5_hex($_[1]);
+	qx(mkdir /home/emma/workspace/Oyster/oysterfeeds/$user);
+	qx(touch "/home/emma/workspace/Oyster/oysterfeeds/$user/$pass");
+		
+	}
 }
 
 sub new_feed {

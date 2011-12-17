@@ -46,7 +46,7 @@ exit;
 #IRC initialization
 sub init {
 	
-	my $irc_server = "storm.psych0tik.net";
+	my $irc_server = "irc.psych0tik.net";
 	my $irc_port = 6697;
 	my $irc_nick = "Oyster";
 	my $irc_name = "Oyster";
@@ -269,13 +269,7 @@ sub irc_any_message {
 		my $recv = $lol[1];
 		$irc->yield('privmsg' => $rspto => "$speaker molests $recv so thoroughly it leaves him simultaneously traumatized, and unnervingly begging for moooooooorre.");
 	}
-	elsif($message =~/^\thank you, Oyster/ 
-		|| $message =~/^\thank you Oyster/
-		|| $message =~/^\thank you oyster/
-		|| $message =~/^\thank you, oyster/
-		|| $message =~/^\thanks Oyster/
-		|| $message =~/^\thanks oyster/){
-		
+	elsif($message =~/^Thanks?\s?you,?\s*Oyster/i){
 		$irc->yield('privmsg' => $rspto => "You're welcome, $sndsimple :)");
 	}
 	elsif($message eq 'hello Oyster' 

@@ -272,10 +272,7 @@ sub irc_any_message {
 	elsif($message =~/^Thanks?\s?you,?\s*Oyster/i){
 		$irc->yield('privmsg' => $rspto => "You're welcome, $sndsimple :)");
 	}
-	elsif($message eq 'hello Oyster' 
-		|| $message eq 'hi Oyster'
-		|| $message eq 'hi oyster'
-		|| $message eq 'hello oyster'){
+	elsif($message =~/(hello|hi|heya|hej|hey|hiya|hoi)+ oyster/i){
 		
 		$irc->yield('privmsg' => $rspto => "Hello, $sndsimple :)");
 	}

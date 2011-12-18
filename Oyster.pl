@@ -343,7 +343,7 @@ sub irc_any_message {
 		my $spl = scalar(@{$xml->{channel}->{item}});
 		
 		for(my $i=0; $i<3; $i++){
-        		$irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
+        		$irc->yield('privmsg' => "$sndsimple: [Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
         	}
 		}	
 		else{

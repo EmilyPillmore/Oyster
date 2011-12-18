@@ -52,7 +52,8 @@ sub init {
 	my $irc_name = "Oyster";
 	my $irc_username = "Oyster";
 	my @irc_channels = {'#hbh-news', '#hbh'};
-			
+  my @diecpu = {'car crash', 'aids collision', 'plane crash', 'boat accident', 'pit full of snakes'}; 	
+
 		#CONNDEF
 		my $conn = POE::Component::IRC->spawn(
 			server=> $irc_server,
@@ -228,10 +229,10 @@ sub irc_any_message {
     elsif($message =~ /^\!chillout/){
     	my $recv = (split(' ', $message))[1];
     	if(defined $recv){
-    	$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a car crash :P");
+    	$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a $diecpu[rand($#diecpu + 1)] :P");
     	}
     	else {
-    	$irc->yield('privmsg' => $rspto => "$sndsimple: chillout dawg, think about CPUkiller in a car crash :P");
+    	$irc->yield('privmsg' => $rspto => "$sndsimple: chillout dawg, think about CPUkiller in a $diecpu[rand($#diecpu + 1)] :P");
     	}
     }
     elsif($message =~ /^\!heyya/){

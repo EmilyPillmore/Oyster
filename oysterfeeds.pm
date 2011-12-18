@@ -18,7 +18,7 @@ sub register {
 	my $user = Digest::MD5::md5_hex($_[1]);
 	my $pass = Digest::MD5::md5_hex($_[2]);
 	qx(mkdir /home/emma/workspace/Oyster/oysterfeeds/$user);
-	qx(touch "/home/emma/workspace/Oyster/oysterfeeds/$user/$pass");
+	qx(touch /home/emma/workspace/Oyster/oysterfeeds/$user/$pass);
 	qx(chmod 666 "/home/emma/workspace/Oyster/oysterfeeds/$user/$pass");
 		
 }

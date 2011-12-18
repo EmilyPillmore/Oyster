@@ -1,5 +1,5 @@
 package oystercommands;
-use strict;
+
 use warnings;
 
 use Switch;
@@ -10,9 +10,26 @@ use Encode;
 use Exporter 'import';
 
 our @EXPORT = qw(bbc hacking ars npr slashdot queerty 
-				cnn sexy sputnik check_update);
+				cnn sexy sputnik get_feeds);
 
-
+sub get_feeds {
+	my $user = Digest::MD5::md5_hex($_[2]);
+	my $pass = Digest::MD5::md5_hex($_[3]);
+	my $file = "/home/emma/workspace/Oyster/oysterfeeds/$user/$pass";
+	sysopen(MYFILE, $file, O_RDONLY);
+	my $data = <MYFILE>;
+	my @data = split(' ', $data);
+	
+	foreach(@data){
+		my $rss = get("$_"); 
+		if(defined $rss){
+		my $rssd = Encode::decode_utf8($rss);
+		my $xml = XMLin($rssd);
+		return $xml;
+		}
+	}
+	close MYFILE;
+}
 
 sub bbc {
 	my $rss = get('http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/technology/rss.xml');

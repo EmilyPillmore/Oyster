@@ -353,17 +353,17 @@ sub irc_any_message {
 	
 	elsif($message =~ /^\!register/){
 		my @args = split(' ', $message);
-		oysterfeeds->register($args[1], $args[2]);
+		oysterfeeds->register(@args);
 		$irc->yield('privmsg' => $rspto => "$sndsimple: Registration successful, $sndsimple!");
 	}
 	elsif($message =~ /^\!get/){
 		my @args = split(' ', $message);
-		my $xml = oysterfeeds->get($args[1], $args[2]);
+		my $xml = oysterfeeds->get(@args);
 		$irc->yield('privmsg' => $sndsimple => "$sndsimple: [Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
     	}
 	elsif($message =~ /^\!new_feed/){
 		my @args = split(' ', $message);
-		oysterfeeds->new_feed($args[1], $args[2], $args[3]);
+		oysterfeeds->new_feed(@args);
 		$irc->yield('privmsg' => $rspto => "$sndsimple: new feed successfully added!");
 	}
 }

@@ -52,8 +52,9 @@ sub init {
 	my $irc_name = "Oyster";
 	my $irc_username = "Oyster";
 	my @irc_channels = {'#hbh-news', '#hbh'};
-			
-		#CONNDEF
+  my @diecpu = {'car crash', 'aids collision', 'plane crash', 'boat accident', 'pit full of snakes'};			
+	
+    	#CONNDEF
 		my $conn = POE::Component::IRC->spawn(
 			server=> $irc_server,
 			port => $irc_port,
@@ -151,7 +152,7 @@ sub irc_001 {
 	
 }
 
-# Recieved public message
+# received public message
 sub irc_public {
 	my ( $kernel, $heap, $sender, $speaker, $rspto, $message ) 
 		= @_[KERNEL,HEAP,SENDER,ARG0,ARG1,ARG2];
@@ -159,7 +160,7 @@ sub irc_public {
 	
 }
 
-# /msg recieved, fiddles a little with rspto
+# /msg received, fiddles a little with rspto
 sub irc_msg {
 	my ( $kernel, $heap, $sender, $rspto, $ignore_me, $message ) 
 		= @_[KERNEL,HEAP,SENDER,ARG0,ARG1,ARG2];
@@ -167,7 +168,7 @@ sub irc_msg {
 	irc_any_message ( $kernel, $heap, $sender, $rspto, $rspto_arr, $message, 1 ); 
 }
 
-# Recieved ANY message
+# received ANY message
 sub irc_any_message { 
 	my ( $kernel, $heap, $sender, $speaker, $rspto, $message, $private ) = @_;
 	my $irc = $sender -> get_heap ( );
@@ -221,7 +222,7 @@ sub irc_any_message {
     	elsif($message =~ /^\!chillout/){
     	my $recv = (split(' ', $message))[1];
     		if(defined $recv){
-    		$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a car crash :P");
+    		$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a " . print $diecpu[rand($#diecpu + 1)] . " :P");
     		}
     		else {
     		$irc->yield('privmsg' => $rspto => "$sndsimple: chillout dawg, think about CPUkiller in a car crash :P");
@@ -242,7 +243,7 @@ sub irc_any_message {
 	elsif($message =~ /^\!stfu/){
 		@speak = split(' ', $message);
 		$recv = $speak[1];
-		if($recv eq "Oyster" || $recv eq "Arabian"){
+		if($recv eq "Oyster" || $recv eq "Arabian" || $recv eq "spyware"){
 			$irc->yield('privmsg' => $rspto=> "$sndsimple: no, u");
 			$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
 		}
@@ -342,7 +343,7 @@ sub irc_any_message {
 		my $spl = scalar(@{$xml->{channel}->{item}});
 		
 		for(my $i=0; $i<3; $i++){
-        		$irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
+        		$irc->yield('privmsg' => "$sndsimple: [Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
         	}
 		}	
 		else{
@@ -373,7 +374,7 @@ sub irc_340 {
 		= @_[KERNEL,HEAP,SENDER,ARG1];
 	my $irc = $sender -> get_heap ( );
 	$irc -> {MTK_ACTUALADDR} = ( ( $arg1 =~ /@(.*)/ ) [ 0 ] );
-	tolog ( "GENERAL: New IP recieved ( $arg1 ) => " . $irc -> {MTK_ACTUALADDR} );
+	tolog ( "GENERAL: New IP received ( $arg1 ) => " . $irc -> {MTK_ACTUALADDR} );
 
 }
 

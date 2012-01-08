@@ -212,30 +212,30 @@ sub irc_any_message {
 	}
 	elsif($message =~ /^\!quit/){
 		
-		if ($sndsimple eq "Arabian") {
+	if ($sndsimple eq "Arabian") {
 		$irc->yield(quit =>);
 		$irc->yield(unregister => 'all'); 
 		exit 0;
-		}
-		else { $irc->yield('privmsg' => $rspto=> "$sndsimple: no, u");
-			$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
-		
-		};
+		} 
+	else { 
+		$irc->yield('privmsg' => $rspto=> "$sndsimple: no, u");
+		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
+	}
 	}
 	elsif($message =~ /^\!cough/){
     	$irc->yield('privmsg' => $rspto => "*grabs cough's sac.*");
     	$irc->yield('privmsg' => $rspto => "cough for me boy. >:C");
 	}
-    elsif($message =~ /^\!chillout/){
+    	elsif($message =~ /^\!chillout/){
     	my $recv = (split(' ', $message))[1];
     	if(defined $recv){
     		$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a $diecpu[rand($#diecpu + 1)] :P");
 		}
     	else {
     		$irc->yield('privmsg' => $rspto => "$sndsimple: chillout dawg, think about CPUkiller in a $diecpu[rand($#diecpu + 1)] :P");	
-       }
-    }
-    elsif($message =~ /^\!snake/){
+       	}
+    	}
+    	elsif($message =~ /^\!snake/){
     	my $recv = (split(' ',$message))[1];
     	if(defined $recv && ($recv ne "Oyster" || $recv ne "Arabian" || $recv ne "Spyware")){
     		$irc->yield('privmsg' => $rspto => "$recv: snake? SNAKE!? SNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKE!!!!");
@@ -245,18 +245,15 @@ sub irc_any_message {
 			$irc->yield('privmsg' => $rspto => "$sndsimple: snake? SNAKE!? SNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKE!!!!");
     		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=K8uLT_EIJjs");
 		}
-    }
-    elsif($message =~ /^\!heyya/){
-		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
-		
+    	}
+    	elsif($message =~ /^\!heyya/){
+		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");	
 	}
 	elsif($message =~ /^\!version/){
 		$irc->yield('privmsg' => $rspto => "$sndsimple: v$version");
-		
 	}
 	elsif($message =~ /^\!dickbutt/){
 		$irc->yield('privmsg' => $rspto => "$sndsimple: frosted butts.");
-		
 	}
 	elsif($message =~ /^\!stfu/){
 		@speak = split(' ', $message);
@@ -269,14 +266,12 @@ sub irc_any_message {
 		chomp($recv);	
 		$irc->yield('privmsg' => $rspto => "$recv: SHUT YOUR WHORE MOUTH. >:C");
 		}
-		
 	}
 	elsif($message =~ /^\!fuck_CPUkiller/){
 			$irc->yield('privmsg' => $rspto => "CPUkiller: NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER http://www.youtube.com/watch?v=6GggY4TEYbk");		
-		
 	}
 
-    elsif($message =~ /^\!molest/){
+    	elsif($message =~ /^\!molest/){
 		@lol = split(' ', $message);
 		@speaker = split('!', $speaker);
 		$speaker = $speaker[0];
@@ -309,7 +304,7 @@ sub irc_any_message {
 		my $xml = oystercommands->slashdot();		
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto  => "[/.] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
-       }
+       	}
 	}
 	elsif($message =~ /^\!cnn/){
 		my $xml = oystercommands->cnn();
@@ -364,11 +359,11 @@ sub irc_any_message {
 		my $xml = XMLin($rssd);
 		
 		for(my $i=0; $i<3; $i++){
-        $irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
-        }
-	}	
-	else{
-		$irc->yield('privmsg' => $rspto => "$sndsimple: Either you suck at typing, or the XML is malformed.");
+        		$irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
+        	}
+		}	
+		else { 
+			$irc->yield('privmsg' => $rspto => "$sndsimple: Either you suck at typing, or the XML is malformed.");
 		}
 	}
 	

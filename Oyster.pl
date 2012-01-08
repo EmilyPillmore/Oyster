@@ -86,7 +86,7 @@ sub init {
 		$conn -> {NICK} = $irc_nick;
 		$conn -> {NAME} = $irc_name;
 		$conn -> {USERNAME} = $irc_username;
-		#$conn -> {MTK_CHANNELS} = @irc_channels;
+		#$conn -> {CHANNELS} = @irc_channels;
 		#heap based channel joining is unecessary, but i'd like to add this implementation.
 		$conn -> {SELF} = $conn;
 		$conn -> {CONN_HASH} = %connections;
@@ -413,6 +413,6 @@ sub irc_340 {
 		= @_[KERNEL,HEAP,SENDER,ARG1];
 	my $irc = $sender -> get_heap ( );
 	$irc -> {MTK_ACTUALADDR} = ( ( $arg1 =~ /@(.*)/ ) [ 0 ] );
-	tolog ( "GENERAL: New IP recieved ( $arg1 ) => " . $irc -> {MTK_ACTUALADDR} );
+	tolog ( "GENERAL: New IP recieved ( $arg1 ) => " . $irc -> {ACTUALADDR} );
 
 }

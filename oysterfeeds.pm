@@ -15,10 +15,12 @@ sub tolog {
 sub register {
 	my $user = Digest::MD5::md5_hex($_[2]);
 	my $pass = Digest::MD5::md5_hex($_[3]);
-	qx(mkdir /home/emma/workspace/Oyster/oysterfeeds/$user);
-	qx(touch /home/emma/workspace/Oyster/oysterfeeds/$user/$pass);
-	qx(sudo chmod 666 /home/emma/workspace/Oyster/oysterfeeds/$user/$pass);
-
+	qx(if [[ ! -f /home/emma/workspace/Oyster/oysterfeeds/$user/$pass ]];
+	   then 
+		mkdir /home/emma/workspace/Oyster/oysterfeeds/$user;
+		touch /home/emma/workspace/Oyster/oysterfeeds/$user/$pass;
+		chmod 666 /home/emma/workspace/Oyster/oysterfeeds/$user/$pass; 
+	   fi);
 }
 
 
@@ -26,6 +28,6 @@ sub new_feed {
 	my $user = Digest::MD5::md5_hex($_[2]);
 	my $pass = Digest::MD5::md5_hex($_[3]);
 	my $input = $_[4];
-	qx(sudo echo '$input ' > /home/emma/workspace/Oyster/oysterfeeds/$user/$pass);
+	qx(sudo echo '$input ' >> /home/emma/workspace/Oyster/oysterfeeds/$user/$pass);
 	
 }

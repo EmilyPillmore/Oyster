@@ -10,24 +10,18 @@ use Encode;
 use Exporter 'import';
 
 our @EXPORT = qw(bbc hacking ars npr slashdot queerty 
-				cnn sexy sputnik get_feeds);
+				cnn sexy sputnik toms get_feeds);
 
 sub get_feeds {
 	my $user = Digest::MD5::md5_hex($_[2]);
 	my $pass = Digest::MD5::md5_hex($_[3]);
 	my $file = "/home/emma/workspace/Oyster/oysterfeeds/$user/$pass";
+	my @lines;
 	sysopen(MYFILE, $file, O_RDONLY);
-	my $data = <MYFILE>;
-	my @data = split(' ', $data);
-	
-	foreach(@data){
-		my $rss = get("$_"); 
-		if(defined $rss){
-		my $rssd = Encode::decode_utf8($rss);
-		my $xml = XMLin($rssd);
-		return $xml;
-		}
+	while(<MYFILE>){
+		push(@lines, $_);
 	}
+	return @lines;
 	close MYFILE;
 }
 
@@ -39,15 +33,15 @@ sub bbc {
 }
 sub hacking {
 	my $rss = get('http://news.ycombinator.com/bigrss');
-	if(Encode::is_utf8($rss)){
-		my $xml = XMLin($rss);
-		return $xml;
-	}
-	else {
-	my $rssd = Encode::decode_utf8($rss);
-	my $xml = XMLin($rssd);
+	$rssd = Encode::encode("utf8", $rssd);
+	my $xml = XMLin($rss);
 	return $xml;
-	}
+}
+sub toms {
+	my $rss = get('http://www.tomshardware.com/feeds/rss2/tom-s-hardware-us,18-2.xml');
+	$rssd = Encode::encode("utf8", $rssd);
+	my $xml = XMLin($rss);
+	return $xml;
 }
 sub cnn {
 	my $rss = get('http://rss.cnn.com/rss/cnn_world.rss');
@@ -57,7 +51,8 @@ sub cnn {
 }
 sub npr {
 	my $rss = get('http://www.npr.org/rss/rss.php?id=1001');
-	my $xml = XMLin($rss);
+	my $rssd = Encode::encode("utf8", $rss);
+	my $xml = XMLin($rssd);
 	return $xml;
 }
 sub sexy {
@@ -68,13 +63,13 @@ sub sexy {
 }
 sub sputnik {
 	my $rss = get('http://feeds.feedburner.com/SputnikmusicNews');
-	my $rssd = Encode::decode_utf8($rss);
+	my $rssd = Encode::encode("utf8", $rss);
 	my $xml = XMLin($rssd);
 	return $xml;
 }
 sub ars {
 	my $rss = get('http://feeds.arstechnica.com/arstechnica/index?format=xml');
-	my $rssd = Encode::decode_utf8($rss);
+	my $rssd = Encode::encode("utf8", $rss);
 	my $xml = XMLin($rssd);
 	return $xml;
 }

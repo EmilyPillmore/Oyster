@@ -39,7 +39,6 @@ sub hacking {
 }
 sub toms {
 	my $rss = get('http://www.tomshardware.com/feeds/rss2/tom-s-hardware-us,18-2.xml');
-	$rssd = Encode::encode("utf8", $rssd);
 	my $xml = XMLin($rss);
 	return $xml;
 }

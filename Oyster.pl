@@ -86,7 +86,7 @@ sub init {
 		$conn -> {NICK} = $irc_nick;
 		$conn -> {NAME} = $irc_name;
 		$conn -> {USERNAME} = $irc_username;
-		#$conn -> {CHANNELS} = @irc_channels;
+		#$conn -> {MTK_CHANNELS} = @irc_channels;
 		#heap based channel joining is unecessary, but i'd like to add this implementation.
 		$conn -> {SELF} = $conn;
 		$conn -> {CONN_HASH} = %connections;
@@ -212,28 +212,28 @@ sub irc_any_message {
 	}
 	elsif($message =~ /^\!quit/){
 		
-	if ($sndsimple eq "Arabian") {
+		if ($sndsimple eq "Arabian") {
 		$irc->yield(quit =>);
 		$irc->yield(unregister => 'all'); 
 		exit 0;
-		} 
-	else { 
-		$irc->yield('privmsg' => $rspto=> "$sndsimple: no, u");
-		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
-	}
+		}
+		else { $irc->yield('privmsg' => $rspto=> "$sndsimple: no, u");
+			$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
+		
+		};
 	}
 	elsif($message =~ /^\!cough/){
     	$irc->yield('privmsg' => $rspto => "*grabs cough's sac.*");
     	$irc->yield('privmsg' => $rspto => "cough for me boy. >:C");
 	}
     	elsif($message =~ /^\!chillout/){
-    	my $recv = (split(' ', $message))[1];
-    	if(defined $recv){
+    		my $recv = (split(' ', $message))[1];
+    		if(defined $recv){
     		$irc->yield('privmsg' => $rspto => "$recv: chillout dawg, think about CPUkiller in a $diecpu[rand($#diecpu + 1)] :P");
 		}
-    	else {
+    		else {
     		$irc->yield('privmsg' => $rspto => "$sndsimple: chillout dawg, think about CPUkiller in a $diecpu[rand($#diecpu + 1)] :P");	
-       	}
+      	 	}
     	}
     	elsif($message =~ /^\!snake/){
     	my $recv = (split(' ',$message))[1];
@@ -247,13 +247,16 @@ sub irc_any_message {
 		}
     	}
     	elsif($message =~ /^\!heyya/){
-		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");	
+		$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
+		
 	}
 	elsif($message =~ /^\!version/){
 		$irc->yield('privmsg' => $rspto => "$sndsimple: v$version");
+		
 	}
 	elsif($message =~ /^\!dickbutt/){
 		$irc->yield('privmsg' => $rspto => "$sndsimple: frosted butts.");
+		
 	}
 	elsif($message =~ /^\!stfu/){
 		@speak = split(' ', $message);
@@ -266,12 +269,14 @@ sub irc_any_message {
 		chomp($recv);	
 		$irc->yield('privmsg' => $rspto => "$recv: SHUT YOUR WHORE MOUTH. >:C");
 		}
+		
 	}
 	elsif($message =~ /^\!fuck_CPUkiller/){
 			$irc->yield('privmsg' => $rspto => "CPUkiller: NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER NIGGER http://www.youtube.com/watch?v=6GggY4TEYbk");		
+		
 	}
 
-    	elsif($message =~ /^\!molest/){
+   	elsif($message =~ /^\!molest/){
 		@lol = split(' ', $message);
 		@speaker = split('!', $speaker);
 		$speaker = $speaker[0];
@@ -293,24 +298,28 @@ sub irc_any_message {
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto  => "[Bbc] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
         }
-	}
+  		oysterfeeds->bbc_log($xml->{channel}->{item}->[0]->{title});
+  	}
 	elsif($message =~ /^\!ars/){
-		my $xml = oystercommands->ars();		
+		my $xml = oystercommands->ars();
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto  => "[Ars-Tech] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
         }
+        oysterfeeds->ars_log($xml->{channel}->{item}->[0]->{title});
 	}
 	elsif($message =~ /^\!slashdot/){
 		my $xml = oystercommands->slashdot();		
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto  => "[/.] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
-       	}
+        }
+       oysterfeeds->slash_log($xml->{channel}->{item}->[0]->{title});
 	}
 	elsif($message =~ /^\!cnn/){
 		my $xml = oystercommands->cnn();
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto => "[Cnn] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
         }
+        oysterfeeds->cnn_log($xml->{channel}->{item}->[0]->{title});
 	}
 	elsif($message =~ /^\!sputnik/){
 		my $xml = oystercommands->sputnik();
@@ -325,31 +334,32 @@ sub irc_any_message {
         }
 	}
 	elsif($message =~ /^\!hacking/){
-		my $xml = oystercommands->hacking();
-		while(defined $xml){		
+		my $xml = oystercommands->hacking();		
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto => "[Ycomb] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
 		}
-		}
+		oysterfeeds->hack_log($xml->{channel}->{item}->[0]->{title});
+		
 	}
 	elsif($message =~ /^\!queerty/){
 		my $xml = oystercommands->queerty();
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto => "[Queerty] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
         }
-		
 	}
 	elsif($message =~ /^\!npr/){
 		my $xml = oystercommands->npr();
 		for(my $i=0; $i<3; $i++){
         $irc->yield('privmsg' => $rspto => "[Npr] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
         }
+        oysterfeeds->npr_log($xml->{channel}->{item}->[0]->{title});
 	}
 	elsif($message =~ /^\!toms/){
 		my $xml = oystercommands->toms();
 		for(my $i=0; $i<3; $i++){
 		$irc->yield('privmsg' => $rspto => "[Tom's] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));	
 		}
+		oysterfeeds->toms_log($xml->{channel}->{item}->[0]->{title});
 	}
 	elsif($message =~ /^\!feed/){
 		my $url = (split(' ', $message))[1];
@@ -359,11 +369,11 @@ sub irc_any_message {
 		my $xml = XMLin($rssd);
 		
 		for(my $i=0; $i<3; $i++){
-        		$irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
-        	}
-		}	
-		else { 
-			$irc->yield('privmsg' => $rspto => "$sndsimple: Either you suck at typing, or the XML is malformed.");
+        $irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
+        }
+	}	
+	else{
+		$irc->yield('privmsg' => $rspto => "$sndsimple: Either you suck at typing, or the XML is malformed.");
 		}
 	}
 	
@@ -407,12 +417,15 @@ sub irc_any_message {
 			$irc->yield('privmsg' => $rspto => "$sndsimple: More parameters required!");
 		}	
 	}
+	
+	#Auto-Feed parsing
+	
 }
 sub irc_340 {
 	my ( $kernel, $heap, $sender,$arg1 ) 
 		= @_[KERNEL,HEAP,SENDER,ARG1];
 	my $irc = $sender -> get_heap ( );
 	$irc -> {MTK_ACTUALADDR} = ( ( $arg1 =~ /@(.*)/ ) [ 0 ] );
-	tolog ( "GENERAL: New IP recieved ( $arg1 ) => " . $irc -> {ACTUALADDR} );
+	tolog ( "GENERAL: New IP recieved ( $arg1 ) => " . $irc -> {MTK_ACTUALADDR} );
 
 }

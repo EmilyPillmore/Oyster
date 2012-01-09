@@ -11,12 +11,12 @@ our @EXPORT = qw(tolog register new_feed feed_log ars_log bbc_log cnn_log
 				slash_log hack_log toms_log npr_log get_logs timer);
 				
 our @logs = ("/home/emma/workspace/Oyster/oysterfeeds/arslog",
-				"/home/emma/workspace/Oyster/oysterfeeds/cnnlog",
-				"/home/emma/workspace/Oyster/oysterfeeds/bbclog",
-				"/home/emma/workspace/Oyster/oysterfeeds/slashlog",
-				"/home/emma/workspace/Oyster/oysterfeeds/hacklog",
-				"/home/emma/workspace/Oyster/oysterfeeds/tomslog",
-				"/home/emma/workspace/Oyster/oysterfeeds/nprlog");
+	     "/home/emma/workspace/Oyster/oysterfeeds/cnnlog",
+	     "/home/emma/workspace/Oyster/oysterfeeds/bbclog",
+	     "/home/emma/workspace/Oyster/oysterfeeds/slashlog",
+	     "/home/emma/workspace/Oyster/oysterfeeds/hacklog",
+	     "/home/emma/workspace/Oyster/oysterfeeds/tomslog",
+	     "/home/emma/workspace/Oyster/oysterfeeds/nprlog");
 
 
 sub tolog {

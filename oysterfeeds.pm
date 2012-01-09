@@ -44,6 +44,8 @@ sub new_feed {
 }
 
 ###### Possible Logging sub 
+
+# I'd rather use this - makes it an easy file/content pair rather than a new function for each command.
 sub feed_log {
 	my (%log) = %{$_[0]};
 	

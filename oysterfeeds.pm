@@ -43,6 +43,22 @@ sub new_feed {
 	
 }
 
+###### Possible Logging sub 
+sub feed_log {
+	my (%log) = %{$_[0]};
+	
+	foreach(keys %log) {
+		qx(if [[ ! -f /home/emma/workspace/Oyster/oysterfeeds/$_log ]];
+		then 
+			touch /home/emma/workspace/Oyster/oysterfeeds/$_log;
+			echo '$log->{$_} ' >> /home/emma/workspace/Oyster/oysterfeeds/$_log;
+		else
+			echo '$log->{$_} ' >> /home/emma/workspace/Oyster/oysterfeeds/$_log;
+		fi);
+	}
+}
+################################
+
 sub ars_log {
 	my $log = $_[1];
 	tolog($log);

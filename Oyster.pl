@@ -25,7 +25,6 @@ tolog("Loading oysterfeeds...");
 use oysterfeeds;
 tolog("Loading oystercommands...");
 use oystercommands;
-tolog("Loading oystergtk...");
 
 #Daemon set
 exit if fork;
@@ -34,15 +33,14 @@ exit if fork;
 my $version = "1.0 production release RSSfeed/Epic Trollbot";
 my @diecpu = ('car crash', 'aids collision', 'plane crash', 'boat accident', 'pit full of snakes');
 my @adjectives = ('the first ever Analrapist, Tobias Funke', 'a ferrari dildocorn', 'a lightsabre', 'THE DILDO OF HADES', 'a katrina victim', 'a republican evangelist', 'a Nancy Reagan real doll', 'a jenna jameson fleshlight', 'a native american');
-my @irc_channels;
+my @irc_channels = ('#hbh', '#hbh-news');
 my %connections;
 
 #Kill children >:C
 $SIG {CHLD} = "IGNORE";
 
-#Load user Feeds
+#Load and Connect
 tolog("Loading userFeeds");
-
 tolog("Connecting...");
 
 #Threaded Init()
@@ -152,7 +150,7 @@ sub irc_001 {
 		tolog ( "STARTUP: Joining: #hbh" );
 		$kernel -> post( $sender => join => '#bots' );
 		tolog ( "STARTUP: Joining: #hbh-news" );
-		#$kernel -> post( $sender => join => '#hbh-news' );
+		$kernel -> post( $sender => join => '#hbh-news' );
 }
 
 # Recieved public message

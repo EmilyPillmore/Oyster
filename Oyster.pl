@@ -2,7 +2,6 @@
 use warnings;
 use Socket;
 use Data::Dumper;
-use Digest::MD5;
 use threads;
 use Encode;
 use Switch;
@@ -410,7 +409,7 @@ sub irc_any_message {
 		case /^\!get_feeds/ {
 			my @args = split(' ', $message);
 			if(defined $args[2]){
-				my @xml = oystercommands->get_feeds(@args);
+				my @xml = oysterfeeds->get_feeds(@args);
 				for(my $i = 0; $i < @xml; $i++){
 					my $rss = get("$xml[$i]"); 
 					my $rssd = Encode::encode("utf8", $rss);

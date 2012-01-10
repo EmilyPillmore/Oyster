@@ -6,7 +6,7 @@ use Exporter 'import';
 use IO::File;
 use Time::HiRes qw(setitimer getitimer);
 
-our @EXPORT = qw(tolog register new_feed feed_log get_logs timer);
+our @EXPORT = qw(tolog register new_feed feed_log get_logs get_feeds timer);
  
 #Array of log file absolute paths
 our @logs = ("/home/emma/workspace/Oyster/oysterfeeds/arslog",
@@ -41,6 +41,20 @@ sub new_feed {
 	my $input = $_[4];
 	qx(sudo echo '$input ' >> /home/emma/workspace/Oyster/oysterfeeds/$user/$pass);
 	
+}
+
+#Get User-feeds from unique file and return array of feeds to parse
+sub get_feeds {
+	my $user = Digest::MD5::md5_hex($_[2]);
+	my $pass = Digest::MD5::md5_hex($_[3]);
+	my $file = "/home/emma/workspace/Oyster/oysterfeeds/$user/$pass";
+	my @lines;
+	sysopen(MYFILE, $file, O_RDONLY);
+	while(<MYFILE>){
+		push(@lines, $_);
+	}
+	return @lines;
+	close MYFILE;
 }
 
 #parse log files and return an array of most recent titles for XML feeds

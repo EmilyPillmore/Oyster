@@ -1,28 +1,16 @@
 package oystercommands;
 
 use warnings;
-
 use XML::Simple;
 use LWP::Simple;
 use HTML::Entities;
 use Encode;
 use Exporter 'import';
 
-our @EXPORT = qw(bbc hacking ars npr slashdot queerty 
-				cnn sexy sputnik toms get_feeds);
+our @EXPORT = qw(bbc hacking ars npr slashdot queerty cnn sexy sputnik toms);
 
-sub get_feeds {
-	my $user = Digest::MD5::md5_hex($_[2]);
-	my $pass = Digest::MD5::md5_hex($_[3]);
-	my $file = "/home/emma/workspace/Oyster/oysterfeeds/$user/$pass";
-	my @lines;
-	sysopen(MYFILE, $file, O_RDONLY);
-	while(<MYFILE>){
-		push(@lines, $_);
-	}
-	return @lines;
-	close MYFILE;
-}
+#XML fetch for specific feeds
+#To add more, just clone a sub, change the xml url, change the sub name, and add to exports.
 
 sub bbc {
 	my $rss = get('http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/technology/rss.xml');
@@ -82,4 +70,4 @@ sub queerty {
 	my $rssd = Encode::encode("utf8", $rss);
 	my $xml = XMLin($rssd);
 	return $xml;
-}1
+}1 #must return true value. do no remove this integer, it is not arbitrary, but satisfies a bug in perl.

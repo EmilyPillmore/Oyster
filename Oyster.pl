@@ -30,13 +30,13 @@ tolog("Loading oystergtk...");
 #Daemon set
 exit if fork;
 
-#Version & deaths
+#Local Variables - version, deaths, molest adj's, chans, and conn hash.
 my $version = "1.0 production release RSSfeed/Epic Trollbot";
 my @diecpu = ('car crash', 'aids collision', 'plane crash', 'boat accident', 'pit full of snakes');
 my @adjectives = ('the first ever Analrapist, Tobias Funke', 'a ferrari dildocorn', 'a lightsabre', 'THE DILDO OF HADES', 'a katrina victim', 'a republican evangelist', 'a Nancy Reagan real doll', 'a jenna jameson fleshlight', 'a native american');
-
-
+my @irc_channels;
 my %connections;
+
 #Kill children >:C
 $SIG {CHLD} = "IGNORE";
 
@@ -90,8 +90,7 @@ sub init {
 		$conn -> {NICK} = $irc_nick;
 		$conn -> {NAME} = $irc_name;
 		$conn -> {USERNAME} = $irc_username;
-		#$conn -> {MTK_CHANNELS} = @irc_channels;
-		#heap based channel joining is unecessary, but i'd like to add this implementation.
+		$conn -> {CHANNELS} = @irc_channels;
 		$conn -> {SELF} = $conn;
 		$conn -> {CONN_HASH} = %connections;
 		$conn -> {LOCAL_ADDR} = "Localhost";

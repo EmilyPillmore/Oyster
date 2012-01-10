@@ -2,7 +2,6 @@ package oystercommands;
 
 use warnings;
 
-use Switch;
 use XML::Simple;
 use LWP::Simple;
 use HTML::Entities;
@@ -33,8 +32,8 @@ sub bbc {
 }
 sub hacking {
 	my $rss = get('http://news.ycombinator.com/bigrss');
-	$rssd = Encode::encode("utf8", $rssd);
-	my $xml = XMLin($rss);
+	$rssd = Encode::encode_utf8($rss);
+	my $xml = XMLin($rssd);
 	return $xml;
 }
 sub toms {

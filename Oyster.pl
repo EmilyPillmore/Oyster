@@ -386,8 +386,8 @@ sub irc_any_message {
 			if(defined $rssd){
 			my $xml = XMLin($rssd);
 				for(my $i=0; $i<3; $i++){
-        		$irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
-        		}
+        			$irc->yield('privmsg' => $sndsimple => "[Title] $xml->{channel}->{item}->[$i]->{title} - ".&makeashorterlink($xml->{channel}->{item}->[$i]->{link}));
+        			}
 			}	
 			else {
 			$irc->yield('privmsg' => $rspto => "$sndsimple: Either you suck at typing, or the XML is malformed.");
@@ -443,6 +443,6 @@ sub irc_340 {
 		= @_[KERNEL,HEAP,SENDER,ARG1];
 	my $irc = $sender -> get_heap ( );
 	$irc -> {MTK_ACTUALADDR} = ( ( $arg1 =~ /@(.*)/ ) [ 0 ] );
-	tolog ( "GENERAL: New IP recieved ( $arg1 ) => " . $irc -> {MTK_ACTUALADDR} );
+	tolog ( "GENERAL: New IP recieved ( $arg1 ) => " . $irc -> {ACTUALADDR} );
 
 }

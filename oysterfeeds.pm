@@ -11,12 +11,12 @@ our @EXPORT = qw(tolog register new_feed feed_log ars_log bbc_log cnn_log
 				slash_log hack_log toms_log npr_log get_logs timer);
 				
 our @logs = ("/home/emma/workspace/Oyster/oysterfeeds/arslog",
-	     "/home/emma/workspace/Oyster/oysterfeeds/cnnlog",
-	     "/home/emma/workspace/Oyster/oysterfeeds/bbclog",
-	     "/home/emma/workspace/Oyster/oysterfeeds/slashlog",
-	     "/home/emma/workspace/Oyster/oysterfeeds/hacklog",
-	     "/home/emma/workspace/Oyster/oysterfeeds/tomslog",
-	     "/home/emma/workspace/Oyster/oysterfeeds/nprlog");
+				"/home/emma/workspace/Oyster/oysterfeeds/cnnlog",
+				"/home/emma/workspace/Oyster/oysterfeeds/bbclog",
+				"/home/emma/workspace/Oyster/oysterfeeds/slashlog",
+				"/home/emma/workspace/Oyster/oysterfeeds/hacklog",
+				"/home/emma/workspace/Oyster/oysterfeeds/tomslog",
+				"/home/emma/workspace/Oyster/oysterfeeds/nprlog");
 
 
 sub tolog {
@@ -42,24 +42,6 @@ sub new_feed {
 	qx(sudo echo '$input ' >> /home/emma/workspace/Oyster/oysterfeeds/$user/$pass);
 	
 }
-
-###### Possible Logging sub 
-
-# I'd rather use this - makes it an easy file/content pair rather than a new function for each command.
-sub feed_log {
-	my (%log) = %{$_[0]};
-	
-	foreach(keys %log) {
-		qx(if [[ ! -f /home/emma/workspace/Oyster/oysterfeeds/$_log ]];
-		then 
-			touch /home/emma/workspace/Oyster/oysterfeeds/$_log;
-			echo '$log->{$_} ' >> /home/emma/workspace/Oyster/oysterfeeds/$_log;
-		else
-			echo '$log->{$_} ' >> /home/emma/workspace/Oyster/oysterfeeds/$_log;
-		fi);
-	}
-}
-################################
 
 sub ars_log {
 	my $log = $_[1];
@@ -158,6 +140,17 @@ sub get_logs {
 	return @lines;
 }
 
+sub feed_log(\$\$) {
+		qx(if [[ ! -f /home/emma/workspace/Oyster/oysterfeeds/$_[1].log ]];
+		then 
+			touch /home/emma/workspace/Oyster/oysterfeeds/$_[1].log;
+			echo '$_[2] ' > /home/emma/workspace/Oyster/oysterfeeds/$_[1].log;
+		else
+			echo '$_[2] ' > /home/emma/workspace/Oyster/oysterfeeds/$_[1].log;
+		fi);
+}
+
+#in progress for Auto-updated feeds along with Get_logs
 sub timer {
 	setitimer(ITIMER_VIRTUAL, 600, 600);
 	return &get_logs;

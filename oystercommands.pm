@@ -7,7 +7,7 @@ use HTML::Entities;
 use Encode;
 use Exporter 'import';
 
-our @EXPORT = qw(bbc hacking ars npr slashdot queerty cnn sexy sputnik toms);
+our @EXPORT = qw(bbc advocate hacking ars npr slashdot queerty cnn sexy sputnik toms);
 
 #XML fetch for specific feeds
 #To add more, just clone a sub, change the xml url, change the sub name, and add to exports.
@@ -18,6 +18,12 @@ sub bbc {
 	my $xml = XMLin($rssd);
 	return $xml;	
 }
+sub advocate {
+	my $rss = get('http://feeds.feedburner.com/AdvocatecomDailyNews');
+	my $rssd = Encode::encode_utf8($rss);
+	my $xml = XMLin($rssd);
+	return $xml;	
+}	
 sub hacking {
 	my $rss = get('http://news.ycombinator.com/bigrss');
 	$rssd = Encode::encode_utf8($rss);

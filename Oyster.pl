@@ -272,8 +272,12 @@ sub irc_any_message {
 				$irc->yield('privmsg' => $rspto => "$sndsimple: http://www.youtube.com/watch?v=6GggY4TEYbk");
 				}
 			else {
-			$irc->yield('privmsg' => $rspto => "$recv: SHUT YOUR WHORE MOUTH. >:C");
+			if(defined $recv){
+				$irc->yield('privmsg' => $rspto => "$recv: SHUT YOUR WHORE MOUTH. >:C");
 			}
+			else {
+				$irc->yield('privmsg' => $rspto => "SHUT YOUR WHORE MOUTH. >:C");
+			}}
 		}
 	
 		case /^\!fuck_CPUkiller/ {
@@ -312,6 +316,14 @@ sub irc_any_message {
         		$irc->yield('privmsg' => $rspto  => "[Ars-Tech] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
         		}
         		oysterfeeds->feed_log('ars', $xml->{channel}->{item}->[0]->{title});
+		}
+		
+		case /^\!advocate/ {
+			my $xml = oystercommands->advocate();
+			for(my $i=0; $i<3; $i++){
+        		$irc->yield('privmsg' => $rspto  => "[Advocate] $xml->{channel}->{item}->[$i]->{title} - ". &makeashorterlink(($xml->{channel}->{item}->[$i]->{link})));
+        		}
+        		oysterfeeds->feed_log('advocate', $xml->{channel}->{item}->[0]->{title});
 		}
 		
 		case /^\!slashdot/ {
